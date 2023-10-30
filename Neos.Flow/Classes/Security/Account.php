@@ -23,84 +23,48 @@ use Neos\Flow\Utility\Now;
 /**
  * An account model
  *
- * @Flow\Entity
  * @api
  */
+#[Flow\Entity]
 class Account
 {
-    /**
-     * @var string
-     * @Flow\Identity
-     * @Flow\Validate(type="NotEmpty")
-     * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255 })
-     */
-    protected $accountIdentifier;
+    #[Flow\Identity]
+    #[Flow\Validate(type: "NotEmpty")]
+    #[Flow\Validate(type: "StringLength", options: ["minimum" => 1, "maximum" => 255])]
+    protected string $accountIdentifier;
 
-    /**
-     * @var string
-     * @Flow\Identity
-     * @Flow\Validate(type="NotEmpty")
-     */
-    protected $authenticationProviderName;
+    #[Flow\Identity]
+    #[Flow\Validate(type: "NotEmpty")]
+    protected string $authenticationProviderName;
 
-    /**
-     * @var string
-     * @ORM\Column(nullable=true)
-     */
-    protected $credentialsSource;
+    #[ORM\Column(nullable: true)]
+    protected ?string $credentialsSource;
 
-    /**
-     * @var \DateTime
-     */
-    protected $creationDate;
+    protected \DateTime $creationDate;
 
-    /**
-     * @var \DateTime
-     * @ORM\Column(nullable=true)
-     */
-    protected $expirationDate;
+    #[ORM\Column(nullable: true)]
+    protected ?\DateTime $expirationDate;
 
-    /**
-     * @var \DateTime
-     * @ORM\Column(nullable=true)
-     */
-    protected $lastSuccessfulAuthenticationDate;
+    #[ORM\Column(nullable: true)]
+    protected ?\DateTime $lastSuccessfulAuthenticationDate;
 
-    /**
-     * @var integer
-     * @ORM\Column(nullable=true)
-     */
-    protected $failedAuthenticationCount;
+    #[ORM\Column(nullable: true)]
+    protected ?int $failedAuthenticationCount;
 
-    /**
-     * @var array of strings
-     * @ORM\Column(type="simple_array", nullable=true)
-     */
-    protected $roleIdentifiers = [];
+    #[ORM\Column(type: "simple_array", nullable: true)]
+    protected ?array $roleIdentifiers = [];
 
-    /**
-     * @Flow\Transient
-     * @var array<Role>
-     */
-    protected $roles;
+    #[Flow\Transient]
+    protected ?array $roles;
 
-    /**
-     * @Flow\Inject
-     * @var PolicyService
-     */
-    protected $policyService;
+    #[Flow\Inject]
+    protected PolicyService $policyService;
 
-    /**
-     * @Flow\Inject
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
+    #[Flow\Inject]
+    protected ObjectManagerInterface $objectManager;
 
-    /**
-     * @Flow\Inject(lazy=false)
-     * @var Now
-     */
-    protected $now;
+    #[Flow\Inject(lazy: false)]
+    protected Now $now;
 
     /**
      * Upon creation the creationDate property is initialized.

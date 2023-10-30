@@ -11,6 +11,8 @@ namespace Neos\Flow\Persistence\Doctrine\Mapping;
  * source code.
  */
 
+use Doctrine\ORM\Mapping\ClassMetadata as DoctrineClassMetadata;
+
 /**
  * A factory for Doctrine to create our ClassMetadata instances, aware of
  * the object manager.
@@ -20,11 +22,8 @@ class ClassMetadataFactory extends \Doctrine\ORM\Mapping\ClassMetadataFactory
 {
     /**
      * Creates a new ClassMetadata instance for the given class name.
-     *
-     * @param string $className
-     * @return ClassMetadata
      */
-    protected function newClassMetadataInstance($className)
+    protected function newClassMetadataInstance(string $className): DoctrineClassMetadata
     {
         return new ClassMetadata($className);
     }

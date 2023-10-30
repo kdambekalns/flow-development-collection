@@ -12,7 +12,6 @@ namespace Neos\Flow\ResourceManagement;
  */
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\QueryBuilder;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
@@ -136,15 +135,11 @@ class ResourceRepository extends Repository
     /**
      * Allow to iterate on an IterableResult and return a Generator
      *
-     * This methos is useful for batch processing huge result set. The callback
+     * This method is useful for batch processing huge result set. The callback
      * is executed after every iteration. It can be used to clear the state of
      * the persistence layer.
-     *
-     * @param IterableResult $iterator
-     * @param callable $callback
-     * @return \Generator
      */
-    public function iterate(IterableResult $iterator, callable $callback = null)
+    public function iterate(iterable $iterator, callable $callback = null): \Generator
     {
         $iteration = 0;
         foreach ($iterator as $object) {
@@ -159,26 +154,21 @@ class ResourceRepository extends Repository
 
     /**
      * Finds all objects and return an IterableResult
-     *
-     * @return IterableResult
      */
-    public function findAllIterator()
+    public function findAllIterator(): iterable
     {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->entityManager->createQueryBuilder();
         return $queryBuilder
             ->select('PersistentResource')
             ->from($this->getEntityClassName(), 'PersistentResource')
-            ->getQuery()->iterate();
+            ->getQuery()->toIterable();
     }
 
     /**
      * Finds all objects by collection name and return an IterableResult
-     *
-     * @param string $collectionName
-     * @return IterableResult
      */
-    public function findByCollectionNameIterator($collectionName)
+    public function findByCollectionNameIterator(string $collectionName): iterable
     {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->entityManager->createQueryBuilder();
@@ -187,7 +177,7 @@ class ResourceRepository extends Repository
             ->from($this->getEntityClassName(), 'PersistentResource')
             ->where('PersistentResource.collectionName = :collectionName')
             ->setParameter(':collectionName', $collectionName)
-            ->getQuery()->iterate();
+            ->getQuery()->toIterable();
     }
 
     /**

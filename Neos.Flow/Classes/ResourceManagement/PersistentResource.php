@@ -22,10 +22,9 @@ use Neos\Flow\ResourceManagement\Exception as ResourceException;
 
 /**
  * Model representing a persistable resource
- *
- * @Flow\Entity
- * @ORM\Table(indexes={@ORM\Index(name="IDX_35DC14F03332102A",columns={"sha1"})})
  */
+#[Flow\Entity]
+#[ORM\Index(name: "IDX_35DC14F03332102A", columns: ["sha1"])]
 class PersistentResource implements ResourceMetaDataInterface, CacheAwareInterface
 {
     /**
@@ -38,52 +37,40 @@ class PersistentResource implements ResourceMetaDataInterface, CacheAwareInterfa
 
     /**
      * Filename which is used when the data of this resource is downloaded as a file or acting as a label
-     *
-     * @var string
-     * @Flow\Validate(type="StringLength", options={ "maximum"=255 })
-     * @ORM\Column(length=255)
      */
-    protected $filename = '';
+    #[Flow\Validate(type: "StringLength", options: ["maximum" => 255])]
+    #[ORM\Column(length: 255)]
+    protected string $filename = '';
 
     /**
      * The size of this object's data
-     *
-     * @var integer
-     * @ORM\Column(type="decimal", scale=0, precision=20, nullable=false)
      */
-    protected $fileSize;
+    #[ORM\Column(type: "decimal", precision: 20, scale: 0)]
+    protected int $fileSize;
 
     /**
      * An optional relative path which can be used by a publishing target for structuring resources into directories
-     *
-     * @var string
      */
-    protected $relativePublicationPath = '';
+    protected string $relativePublicationPath = '';
 
     /**
      * The IANA media type of this resource
-     *
-     * @var string
-     * @Flow\Validate(type="StringLength", options={ "maximum"=100 })
-     * @ORM\Column(length=100)
      */
-    protected $mediaType;
+    #[Flow\Validate(type: "StringLength", options: ["maximum" =>100 ])]
+    #[ORM\Column(length: 100)]
+    protected string $mediaType;
 
     /**
      * SHA1 hash identifying the content attached to this resource
-     *
-     * @var string
-     * @ORM\Column(length=40)
      */
-    protected $sha1;
+    #[ORM\Column(length: 40)]
+    protected string $sha1;
 
     /**
      * As soon as the PersistentResource has been published, modifying this object is not allowed
-     *
-     * @Flow\Transient
-     * @var boolean
      */
-    protected $protected = false;
+    #[Flow\Transient]
+    protected bool $protected = false;
 
     /**
      * @Flow\Transient
@@ -358,8 +345,8 @@ class PersistentResource implements ResourceMetaDataInterface, CacheAwareInterfa
      * This method triggers the publication of this resource.
      *
      * @return void
-     * @ORM\PostPersist
      */
+    #[ORM\PostPersist]
     public function postPersist()
     {
         if ($this->lifecycleEventsActive) {
@@ -373,8 +360,8 @@ class PersistentResource implements ResourceMetaDataInterface, CacheAwareInterfa
      * This method triggers the deletion of data related to this resource.
      *
      * @return void
-     * @ORM\PreRemove
      */
+    #[ORM\PreRemove]
     public function preRemove()
     {
         if ($this->lifecycleEventsActive && $this->deleted === false) {

@@ -40,11 +40,11 @@
         "ramsey/uuid": "^3.0 || ^4.0",
         "laminas/laminas-code": "^4.10",
 
-        "doctrine/orm": "^2.12.0",
-        "doctrine/migrations": "^3.0",
-        "doctrine/dbal": "^2.13",
-        "doctrine/common": "^3.0.3",
-        "doctrine/annotations": "^1.12",
+        "doctrine/orm": "^3.0",
+        "doctrine/migrations": "^3.6",
+        "doctrine/dbal": "^3.6",
+        "doctrine/common": "^3.3",
+        "doctrine/annotations": "^2.0",
 
         "symfony/yaml": "^5.1||^6.0",
         "symfony/dom-crawler": "^5.1||^6.0",
@@ -55,7 +55,7 @@
 
         "composer/composer": "^2.2.8",
 
-        "egulias/email-validator": "^2.1.17 || ^3.0"
+        "egulias/email-validator": "^3.0 || ^4.0"
     },
     "require-dev": {
         "vimeo/psalm": "~4.30.0",

@@ -26,7 +26,7 @@ class SubSubEntityRepository extends Repository
      */
     const ENTITY_CLASSNAME = SubSubEntity::class;
 
-    public function findAll(): QueryResultInterface
+    public function findAll(): array
     {
         $result = parent::findAll();
         foreach ($result as $instance) {

@@ -17,50 +17,38 @@ use Neos\Flow\Annotations as Flow;
 /**
  * An ObjectPathMapping model
  * This contains the URI representation of an object (pathSegment)
- *
- * @Flow\Entity
- * @ORM\Table(
- *  indexes={
- *      @ORM\Index(columns={"identifier", "uripattern", "pathsegment"})
- *  }
- * )
  */
+#[Flow\Entity]
+#[ORM\Index(fields: ["identifier", "uripattern", "pathsegment"])]
 class ObjectPathMapping
 {
     /**
      * Class name of the object this mapping belongs to
      *
-     * @var string
      * @psalm-var class-string
-     * @ORM\Id
-     * @Flow\Validate(type="NotEmpty")
      */
-    protected $objectType;
+    #[ORM\Id]
+    #[Flow\Validate(type: 'NotEmpty')]
+    protected string $objectType;
 
     /**
      * Pattern of the path segment (for example "{date}/{title}")
-     *
-     * @var string
-     * @ORM\Id
-     * @Flow\Validate(type="NotEmpty")
      */
-    protected $uriPattern;
+    #[ORM\Id]
+    #[Flow\Validate(type: 'NotEmpty')]
+    protected string $uriPattern;
 
     /**
      * Path segment (URI representation) of the object this mapping belongs to
-     *
-     * @var string
-     * @ORM\Id
-     * @Flow\Validate(type="NotEmpty")
      */
-    protected $pathSegment;
+    #[ORM\Id]
+    #[Flow\Validate(type: 'NotEmpty')]
+    protected string $pathSegment;
 
     /**
      * Identifier of the object this mapping belongs to
-     *
-     * @var string
      */
-    protected $identifier;
+    protected string $identifier;
 
     /**
      * @param string $pathSegment

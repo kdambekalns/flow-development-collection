@@ -21,7 +21,7 @@ use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Validation\ValidatorResolver;
 use Neos\Utility\ObjectAccess;
 use Neos\Utility\TypeHandling;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 /**
  * An onFlush listener for Flow's Doctrine PersistenceManager.
@@ -95,7 +95,7 @@ class ObjectValidationAndDeDuplicationListener
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
     {
-        $this->entityManager = $eventArgs->getEntityManager();
+        $this->entityManager = $eventArgs->getObjectManager();
         $validatedInstancesContainer = new \SplObjectStorage();
 
         $this->deduplicateValueObjectInsertions();

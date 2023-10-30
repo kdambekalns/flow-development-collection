@@ -25,14 +25,14 @@ class CountWalker extends TreeWalkerAdapter
     /**
      * Walks down a SelectStatement AST node, modifying it to retrieve a COUNT
      *
-     * @param SelectStatement $AST
+     * @param SelectStatement $selectStatement
      * @return void
      */
-    public function walkSelectStatement(SelectStatement $AST)
+    public function walkSelectStatement(SelectStatement $selectStatement): void
     {
         $parent = null;
         $parentName = null;
-        foreach ($this->_getQueryComponents() as $dqlAlias => $qComp) {
+        foreach ($this->getQueryComponents() as $dqlAlias => $qComp) {
             if ($qComp['parent'] === null && $qComp['nestingLevel'] === 0) {
                 $parent = $qComp;
                 $parentName = $dqlAlias;
@@ -47,7 +47,7 @@ class CountWalker extends TreeWalkerAdapter
         );
         $pathExpression->type = PathExpression::TYPE_STATE_FIELD;
 
-        $AST->selectClause->selectExpressions = [
+        $selectStatement->selectClause->selectExpressions = [
             new SelectExpression(
                 new AggregateExpression('count', $pathExpression, true),
                 null
@@ -55,6 +55,6 @@ class CountWalker extends TreeWalkerAdapter
         ];
 
         // ORDER BY is not needed, only increases query execution through unnecessary sorting.
-        $AST->orderByClause = null;
+        $selectStatement->orderByClause = null;
     }
 }

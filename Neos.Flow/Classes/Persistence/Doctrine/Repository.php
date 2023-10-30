@@ -13,9 +13,8 @@ namespace Neos\Flow\Persistence\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\TransactionRequiredException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\Mapping\ClassMetadata;
@@ -61,9 +60,6 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
 
     /**
      * Initializes a new Repository.
-     *
-     * @param EntityManagerInterface $entityManager The EntityManager to use.
-     * @param ClassMetadata|null $classMetadata The class descriptor.
      */
     public function __construct(EntityManagerInterface $entityManager, ClassMetadata $classMetadata = null)
     {
@@ -78,7 +74,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
             $classMetadata = $entityManager->getClassMetadata($this->objectType);
         }
         parent::__construct($entityManager, $classMetadata);
-        $this->entityManager = $this->_em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -134,36 +130,30 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @return QueryResultInterface The query result
      * @api
      */
-    public function findAll(): QueryResultInterface
+    public function findAll(): array
     {
         return $this->createQuery()->execute();
     }
 
     /**
      * Find all objects and return an IterableResult
-     *
-     * @return IterableResult
      */
-    public function findAllIterator(): IterableResult
+    public function findAllIterator(): iterable
     {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->entityManager->createQueryBuilder();
         return $queryBuilder
             ->select('entity')
             ->from($this->getEntityClassName(), 'entity')
-            ->getQuery()->iterate();
+            ->getQuery()->toIterable();
     }
 
     /**
      * Iterate over an IterableResult and return a Generator
      *
      * This method is useful for batch processing a huge result set.
-     *
-     * @param IterableResult $iterator
-     * @param callable|null $callback
-     * @return \Generator
      */
-    public function iterate(IterableResult $iterator, callable $callback = null): ?\Generator
+    public function iterate(iterable $iterator, callable $callback = null): ?\Generator
     {
         $iteration = 0;
         foreach ($iterator as $object) {
@@ -294,7 +284,7 @@ abstract class Repository extends EntityRepository implements RepositoryInterfac
      * @return mixed The result of the repository method
      * @api
      */
-    public function __call($method, $arguments)
+    public function __call($method, $arguments): mixed
     {
         $query = $this->createQuery();
         $caseSensitive = isset($arguments[1]) ? (boolean)$arguments[1] : true;

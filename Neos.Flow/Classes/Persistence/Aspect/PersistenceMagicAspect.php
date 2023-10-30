@@ -17,14 +17,14 @@ use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Utility\ObjectAccess;
 use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Utility\Algorithms;
+use Neos\Flow\Persistence\Aspect\PersistenceMagicInterface;
 
 /**
  * Adds the aspect of persistence magic to relevant objects
- *
- * @Flow\Scope("singleton")
- * @Flow\Aspect
- * @Flow\Introduce("Neos\Flow\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject", interfaceName="Neos\Flow\Persistence\Aspect\PersistenceMagicInterface")
  */
+#[Flow\Scope('singleton')]
+#[Flow\Aspect]
+#[Flow\Introduce('Neos\Flow\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject', interfaceName: PersistenceMagicInterface::class)]
 class PersistenceMagicAspect
 {
     /**
@@ -67,13 +67,10 @@ class PersistenceMagicAspect
     {
     }
 
-    /**
-     * @var string
-     * @Doctrine\ORM\Mapping\Id
-     * @Doctrine\ORM\Mapping\Column(length=40)
-     * @Flow\Introduce("Neos\Flow\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject && filter(Neos\Flow\Persistence\Doctrine\Mapping\Driver\FlowAnnotationDriver)")
-     */
-    protected $Persistence_Object_Identifier;
+    #[Flow\Introduce("Neos\Flow\Persistence\Aspect\PersistenceMagicAspect->isEntityOrValueObject && filter(Neos\Flow\Persistence\Doctrine\Mapping\Driver\FlowAnnotationDriver)")]
+    #[\Doctrine\ORM\Mapping\Id]
+    #[\Doctrine\ORM\Mapping\Column(length: 40)]
+    protected string $Persistence_Object_Identifier = '';
 
     /**
      * Initializes this aspect

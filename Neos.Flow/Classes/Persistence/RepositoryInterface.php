@@ -50,7 +50,7 @@ interface RepositoryInterface
      * @return QueryResultInterface The query result
      * @api
      */
-    public function findAll(): QueryResultInterface;
+    public function findAll(): array;
 
     /**
      * Finds an object matching the given identifier.

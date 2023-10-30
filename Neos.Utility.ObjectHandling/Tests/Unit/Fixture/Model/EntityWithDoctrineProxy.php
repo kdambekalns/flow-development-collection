@@ -11,7 +11,7 @@ namespace Neos\Utility\ObjectHandling\Tests\Unit\Fixture\Model;
  * source code.
  */
 
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 
 /**
  * A class that is a Doctrine proxy

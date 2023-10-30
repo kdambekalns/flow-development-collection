@@ -107,11 +107,10 @@ abstract class Repository implements RepositoryInterface
     /**
      * Returns all objects of this repository
      *
-     * @return QueryResultInterface The query result
      * @api
      * @see QueryInterface::execute()
      */
-    public function findAll(): QueryResultInterface
+    public function findAll(): array
     {
         return $this->createQuery()->execute();
     }

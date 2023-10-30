@@ -44,7 +44,7 @@ class SqlFilter extends DoctrineSqlFilter
      * @param string $targetTableAlias The target table alias used in the current query
      * @return string The constraint SQL if there is available, empty string otherwise
      */
-    public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
+    public function addFilterConstraint(ClassMetadata $targetEntity, string $targetTableAlias): string
     {
         $this->initializeDependencies();
 

@@ -22,10 +22,8 @@ class ClassMetadata extends \Doctrine\ORM\Mapping\ClassMetadata
 {
     /**
      * Gets the ReflectionClass instance of the mapped class.
-     *
-     * @return ClassReflection
      */
-    public function getReflectionClass()
+    public function getReflectionClass(): ?\ReflectionClass
     {
         if ($this->reflClass === null) {
             $this->_initializeReflection();
@@ -35,22 +33,16 @@ class ClassMetadata extends \Doctrine\ORM\Mapping\ClassMetadata
 
     /**
      * Initializes $this->reflClass and a number of related variables.
-     *
-     * @param DoctrineReflectionService $reflService
-     * @return void
      */
-    public function initializeReflection($reflService)
+    public function initializeReflection(DoctrineReflectionService $reflService): void
     {
         $this->_initializeReflection();
     }
 
     /**
      * Restores some state that can not be serialized/unserialized.
-     *
-     * @param DoctrineReflectionService $reflService
-     * @return void
      */
-    public function wakeupReflection($reflService)
+    public function wakeupReflection(DoctrineReflectionService $reflService): void
     {
         parent::wakeupReflection($reflService);
         $this->reflClass = new ClassReflection($this->name);
@@ -58,10 +50,8 @@ class ClassMetadata extends \Doctrine\ORM\Mapping\ClassMetadata
 
     /**
      * Initializes $this->reflClass and a number of related variables.
-     *
-     * @return void
      */
-    protected function _initializeReflection()
+    protected function _initializeReflection(): void
     {
         $this->reflClass = new ClassReflection($this->name);
         $this->namespace = $this->reflClass->getNamespaceName();

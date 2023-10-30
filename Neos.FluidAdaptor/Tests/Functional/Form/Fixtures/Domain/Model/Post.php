@@ -24,41 +24,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var User
-     * @ORM\ManyToOne(cascade={"all"})
-     */
-    protected $author;
+    #[ORM\ManyToOne(cascade: ['all'])]
+    protected User $author;
 
-    /**
-     * @var boolean
-     * @ORM\Column(nullable=true)
-     */
-    protected $private;
+    #[ORM\Column(nullable: true)]
+    protected ?bool $private;
 
-    /**
-     * @var string
-     * @ORM\Column(nullable=true)
-     */
-    protected $category;
+    #[ORM\Column(nullable: true)]
+    protected ?string $category;
 
-    /**
-     * @var string
-     * @ORM\Column(nullable=true)
-     */
-    protected $subCategory;
+    #[ORM\Column(nullable: true)]
+    protected ?string $subCategory;
 
-    /**
-     * @var Collection<Tag>
-     * @ORM\ManyToMany
-     * @ORM\JoinTable(inverseJoinColumns={@ORM\JoinColumn(unique=true)})
-     */
-    protected $tags;
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
+    #[ORM\InverseJoinColumn(unique: true)]
+    protected Collection $tags;
 
     public function __construct()
     {
