@@ -168,16 +168,16 @@ class EntityManagerConfiguration
      */
     protected function applyCacheConfiguration(Configuration $config): void
     {
-        $cache = new CacheAdapter();
+//        $cache = new CacheAdapter();
         // must use ObjectManager in compile phase...
-        $cache->setCache($this->objectManager->get(CacheManager::class)->getCache('Flow_Persistence_Doctrine'));
-        $config->setMetadataCacheImpl($cache);
-        $config->setQueryCacheImpl($cache);
+//        $cache->setCache($this->objectManager->get(CacheManager::class)->getCache('Flow_Persistence_Doctrine'));
+//        $config->setMetadataCache($cache);
+//        $config->setQueryCache($cache);
 
-        $resultCache = new CacheAdapter();
-        // must use ObjectManager in compile phase...
-        $resultCache->setCache($this->objectManager->get(CacheManager::class)->getCache('Flow_Persistence_Doctrine_Results'));
-        $config->setResultCacheImpl($resultCache);
+//        $resultCache = new CacheAdapter();
+//        // must use ObjectManager in compile phase...
+//        $resultCache->setCache($this->objectManager->get(CacheManager::class)->getCache('Flow_Persistence_Doctrine_Results'));
+//        $config->setResultCache($resultCache);
     }
 
     /**
