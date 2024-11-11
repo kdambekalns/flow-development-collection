@@ -28,7 +28,7 @@
         "doctrine/common": "^3.0.3",
         "doctrine/annotations": "^1.12",
         "symfony/yaml": "^5.1",
-        "symfony/dom-crawler": "^5.1",
+        "symfony/dom-crawler": "^7.1",
         "symfony/console": "^5.1",
         "neos/composer-plugin": "^2.0",
         "composer/composer": "^2.2.8",
