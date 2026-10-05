@@ -16,7 +16,7 @@
         ]
     },
     "require": {
-        "behat/behat": "^3.10",
+        "behat/behat": "^4.0",
         "php": "^8.2",
         "psr/simple-cache": "^2.0 || ^3.0",
         "psr/cache": "^2.0 || ^3.0",
